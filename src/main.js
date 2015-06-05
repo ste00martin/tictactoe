@@ -4,11 +4,6 @@ var COMPUTER_PLAYER = 2;
 
 var board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
-var humanWinCounter = 0;
-var compWinCounter = 0;
-var tiesCounter = 0;
-
-
 function _detect_if_game_ended(board) {
     var gameState = 0; //game still going
 
@@ -31,7 +26,6 @@ function _detect_if_game_ended(board) {
              board[2][0] !== 0 && board[2][1] !== 0 && board[2][2] !== 0) {
         gameState = 3; //tie game
     }
-
     return gameState;
 }
 
@@ -42,7 +36,7 @@ function _change_board_token(xAxis, yAxis, player) {
         return true;
     } else if (player == 1) {
         alert(
-            "FThat square is already occupied.  Please select another square."
+            "That square is already occupied.  Please select another square."
         );
     }
     return false;
@@ -58,22 +52,16 @@ function _is_space_available(xAxis, yAxis, boardgame) {
 function _display_if_game_ended(gameState) {
     if (gameState == 1) {
         alert("You won, congratulations!");
-        humanWinCounter++;
     } else if (gameState == 2) {
         alert("Gotcha!  I win!");
-        compWinCounter++;
     } else if (gameState == 3) {
         alert("We tied.");
-        tiesCounter++;
     }
-    document.game.you.value = humanWinCounter;
-    document.game.computer.value = compWinCounter;
-    document.game.ties.value = tiesCounter;
 }
 
 
 function _change_image(xAxis, yAxis, player) {
-    var id = xAxis.toString() + yAxis.toString();
+    var id = 'i' + xAxis.toString() + yAxis.toString();
     var value = "images/blank.jpg";
 
     if (player == 1) {
@@ -89,15 +77,13 @@ function _reset_board() {
     for (var xAxis = 0; xAxis <= 2; xAxis++) {
         for (var yAxis = 0; yAxis <= 2; yAxis++) {
             board[xAxis][yAxis] = 0;
-            _change_image(xAxis, yAxis, 0)
-            
+            _change_image(xAxis, yAxis, 0);
         }
     }
 }
 
 function _comp_planner(treeDepth, isMaximizingPlayer) {
     var gameState = _detect_if_game_ended(board);
-    
     if (gameState == 1) { //human won, we don't need this move info just the score
         return {
             score: treeDepth - 10,
@@ -119,22 +105,21 @@ function _comp_planner(treeDepth, isMaximizingPlayer) {
     }
     var score = 0;
     var player = 3;
-    //The game hasn't ended, so lets think about what the next move may be
-    if (isMaximizingPlayer) { //computers turn
-        score = -20; //initializes variable, immediately overridden on first score return
-        daFunc = Math.max;
-        player = COMPUTER_PLAYER;
-    } else { // humans turn
-        score = 20; //initializer, will be immediately overridden
-        daFunc = Math.min; // returns the least value
-        player = HUMAN_PLAYER;
-    }
     var xMove = -1;
     var yMove = -1;
 
+    //The game hasn't ended, so lets think about what the next move may be
+    if (isMaximizingPlayer) { //computers turn
+        score = -20; //initializes variable, immediately overridden on first score return
+        player = COMPUTER_PLAYER;
+    } else { // humans turn
+        score = 20; //initializer, will be immediately overridden
+        player = HUMAN_PLAYER;
+    }
+
     //Get the score outcomes for the available board moves
     for (var xAxis = 0; xAxis <= 2; xAxis++) {
-        for (var yAxis = 0; yAxis <= 2; yAxis++) { 
+        for (var yAxis = 0; yAxis <= 2; yAxis++) {
             var available = _is_space_available(xAxis, yAxis, board);
             if (available) {
                 board[xAxis][yAxis] = player;
@@ -166,13 +151,13 @@ function _comp_planner(treeDepth, isMaximizingPlayer) {
 }
 
 function _comp_choice() {
-    isGameOver = _detect_if_game_ended(board);
+    var isGameOver = _detect_if_game_ended(board);
     if (isGameOver > 0){
-        _display_if_game_ended(isGameOver);   
+        _display_if_game_ended(isGameOver);
     }
-    nextMove = _comp_planner(0, true, -1, -1);
-    xMove = nextMove.xMove;
-    yMove = nextMove.yMove;
+    var nextMove = _comp_planner(0, true, -1, -1);
+    var xMove = nextMove.xMove;
+    var yMove = nextMove.yMove;
     _change_board_token(xMove, yMove, COMPUTER_PLAYER);
 
     _display_if_game_ended( _detect_if_game_ended(board) );
@@ -189,11 +174,11 @@ function your_choice(chName) {
         );
     }
     if (gameState === 0) {
-        legalMove = _change_board_token(first, last, HUMAN_PLAYER);
+        var legalMove = _change_board_token(first, last, HUMAN_PLAYER);
         if (legalMove) {
             gameState = _detect_if_game_ended(board);
             if (gameState === 0) {
-                _comp_choice();    
+                _comp_choice();
             } else {
                 _display_if_game_ended(gameState);
             }
