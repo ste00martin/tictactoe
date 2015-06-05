@@ -9,7 +9,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="True" name="HandheldFriendly" />
         <meta content="320" name="MobileOptimized" />
-        <script language="JavaScript" type="text/javascript" src="assets/main.js" ></script>
+        <script language="JavaScript" type="text/javascript" src="src/main.js" ></script>
     </head>
     <body>
         <div align="center">
@@ -24,42 +24,41 @@
                                     <table border="1">
                                         <tbody>
                                             <tr>
-                                                <td><a href="javascript:yourChoice('00')"
-                                                id='000'
-                                                ><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="A" alt="Top-Left" id="00" /></a></td>
-                                                <td><a href="javascript:yourChoice('01')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="B" alt="Top-Center" id="01" /></a></td>
-                                                <td><a href="javascript:yourChoice('02')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="C" alt="Top-Right" id="02" /></a></td>
+                                                <td><a href="javascript:your_choice('00')"><img src="images/blank.jpg" border="0" height="100" width="100" name="A" alt="Top-Left" id="00" />
+                                                </a></td>
+                                                <td><a href="javascript:your_choice('01')" id='00'><img src="images/blank.jpg" border="0" height="100" width="100" name="B" alt="Top-Center" id="01" /></a></td>
+                                                <td><a href="javascript:your_choice('02')"><img src="images/blank.jpg" border="0" height="100" width="100" name="C" alt="Top-Right" id="02" /></a></td>
                                             </tr>
                                             <tr>
-                                                <td><a href="javascript:yourChoice('10')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="D" alt="Middle-Left" id="10" /></a></td>
-                                                <td><a href="javascript:yourChoice('11')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="E" alt="Middle-Center" id="11" /></a></td>
-                                                <td><a href="javascript:yourChoice('12')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="F" alt="Middle-Right" id="12" /></a></td>
+                                                <td><a href="javascript:your_choice('10')"><img src="images/blank.jpg" border="0" height="100" width="100" name="D" alt="Middle-Left" id="10" /></a></td>
+                                                <td><a href="javascript:your_choice('11')"><img src="images/blank.jpg" border="0" height="100" width="100" name="E" alt="Middle-Center" id="11" /></a></td>
+                                                <td><a href="javascript:your_choice('12')"><img src="images/blank.jpg" border="0" height="100" width="100" name="F" alt="Middle-Right" id="12" /></a></td>
                                             </tr>
                                             <tr>
-                                                <td><a href="javascript:yourChoice('20')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="G" alt="Bottom-Left" id="20" /></a></td>
-                                                <td><a href="javascript:yourChoice('21')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="H" alt="Bottom-Center" id="21" /></a></td>
-                                                <td><a href="javascript:yourChoice('22')"><img src="images/tic_tac_toe/blank.jpg" border="0" height="100" width="100" name="I" alt="Bottom-Right" id="22" /></a></td>
+                                                <td><a href="javascript:your_choice('20')"><img src="images/blank.jpg" border="0" height="100" width="100" name="G" alt="Bottom-Left" id="20" /></a></td>
+                                                <td><a href="javascript:your_choice('21')"><img src="images/blank.jpg" border="0" height="100" width="100" name="H" alt="Bottom-Center" id="21" /></a></td>
+                                                <td><a href="javascript:your_choice('22')"><img src="images/blank.jpg" border="0" height="100" width="100" name="I" alt="Bottom-Right" id="22" /></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input type="text" size="5" name="you" /></td>
-                                                    <td>You </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" size="5" name="computer" /></td>
-                                                    <td>Computer </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" size="5" name="ties" /></td>
-                                                    <td>Ties </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    <input type="button" value="Computer Start" onclick="playAgainComputer();" />
-                                    <input type="button" value="Human Start" onclick="playAgainHuman();" />
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" size="5" name="you" /></td>
+                                                <td>You </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" size="5" name="computer" /></td>
+                                                <td>Computer </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" size="5" name="ties" /></td>
+                                                <td>Ties </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="button" value="Computer Start" onclick="play_again_computer();" />
+                                    <input type="button" value="Human Start" onclick="play_again_human();" />
                                 </form>
                             </center>
                         </td>

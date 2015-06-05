@@ -1,8 +1,4 @@
-// static variables
 
-var X_FILE = "images/tic_tac_toe/x.jpg"; // Location of where you uploaded your site's x.jpg image
-var O_FILE = "images/tic_tac_toe/o.jpg"; // Location of where you uploaded your site's o.jpg image
-var BLANK_FILE = "images/tic_tac_toe/blank.jpg";
 var HUMAN_PLAYER = 1;
 var COMPUTER_PLAYER = 2;
 
@@ -11,6 +7,7 @@ var board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 var humanWinCounter = 0;
 var compWinCounter = 0;
 var tiesCounter = 0;
+
 
 function _detect_if_game_ended(board) {
     var gameState = 0; //game still going
@@ -41,11 +38,7 @@ function _detect_if_game_ended(board) {
 function _change_board_token(xAxis, yAxis, player) {
     if (board[xAxis][yAxis] === 0) {
         board[xAxis][yAxis] = player;
-        if (player == 1) {
-            document.images.namedItem(xAxis.toString() + yAxis.toString()).src = X_FILE;
-        } else {
-            document.images.namedItem(xAxis.toString() + yAxis.toString()).src = O_FILE;    
-        }        
+        _change_image(xAxis, yAxis, player);
         return true;
     } else if (player == 1) {
         alert(
@@ -62,25 +55,42 @@ function _is_space_available(xAxis, yAxis, boardgame) {
     return false;
 }
 
-function yourChoice(chName) {
-    var first = parseInt( chName.charAt(0) );
-    var last = parseInt( chName.charAt(1) );
-    var gameState = _detect_if_game_ended(board);
-
-    if (gameState !== 0) {
-        alert(
-        "The game has already ended. To play a new game click the Play Again button."
-        );
+function _display_if_game_ended(gameState) {
+    if (gameState == 1) {
+        alert("You won, congratulations!");
+        humanWinCounter++;
+    } else if (gameState == 2) {
+        alert("Gotcha!  I win!");
+        compWinCounter++;
+    } else if (gameState == 3) {
+        alert("We tied.");
+        tiesCounter++;
     }
-    if (gameState === 0) {
-        legalMove = _change_board_token(first, last, HUMAN_PLAYER);
-        if (legalMove) {
-            gameState = _detect_if_game_ended(board);
-            if (gameState === 0) {
-                _comp_choice();    
-            } else {
-                _display_if_game_ended(gameState);
-            }
+    document.game.you.value = humanWinCounter;
+    document.game.computer.value = compWinCounter;
+    document.game.ties.value = tiesCounter;
+}
+
+
+function _change_image(xAxis, yAxis, player) {
+    var id = xAxis.toString() + yAxis.toString();
+    var value = "images/blank.jpg";
+
+    if (player == 1) {
+        value = "images/x.jpg";
+    } else if (player == 2) {
+        value = "images/o.jpg";
+    }
+
+    document.images.namedItem(id).src = value;
+}
+
+function _reset_board() {
+    for (var xAxis = 0; xAxis <= 2; xAxis++) {
+        for (var yAxis = 0; yAxis <= 2; yAxis++) {
+            board[xAxis][yAxis] = 0;
+            _change_image(xAxis, yAxis, 0)
+            
         }
     }
 }
@@ -88,7 +98,7 @@ function yourChoice(chName) {
 function _comp_planner(treeDepth, isMaximizingPlayer) {
     var gameState = _detect_if_game_ended(board);
     
-    if (gameState == 1) { //human won
+    if (gameState == 1) { //human won, we don't need this move info just the score
         return {
             score: treeDepth - 10,
             xMove: -1,
@@ -168,40 +178,34 @@ function _comp_choice() {
     _display_if_game_ended( _detect_if_game_ended(board) );
 }
 
-function _display_if_game_ended(gameState) {
-    if (gameState == 1) {
-        alert("You won, congratulations!");
-        humanWinCounter++;
-    } else if (gameState == 2) {
-        alert("Gotcha!  I win!");
-        compWinCounter++;
-    } else if (gameState == 3) {
-        alert("We tied.");
-        tiesCounter++;
+function your_choice(chName) {
+    var first = parseInt( chName.charAt(0) );
+    var last = parseInt( chName.charAt(1) );
+    var gameState = _detect_if_game_ended(board);
+
+    if (gameState !== 0) {
+        alert(
+        "The game has already ended. To play a new game click the Play Again button."
+        );
     }
-    document.game.you.value = humanWinCounter;
-    document.game.computer.value = compWinCounter;
-    document.game.ties.value = tiesCounter;
-}
-
-function playAgainHuman() {
-    _reset_board();
-}
-
-function playAgainComputer() {
-    _reset_board();
-    _comp_choice();
-}
-
-//document.getElementById('00').innerHTML = 'gaaaaa'
-
-function _reset_board() {
-    for (var xAxis = 0; xAxis <= 2; xAxis++) {
-        for (var yAxis = 0; yAxis <= 2; yAxis++) {
-            board[xAxis][yAxis] = 0;
-            document.images.namedItem(xAxis.toString() + yAxis.toString()).src = BLANK_FILE;
+    if (gameState === 0) {
+        legalMove = _change_board_token(first, last, HUMAN_PLAYER);
+        if (legalMove) {
+            gameState = _detect_if_game_ended(board);
+            if (gameState === 0) {
+                _comp_choice();    
+            } else {
+                _display_if_game_ended(gameState);
+            }
         }
     }
 }
 
+function play_again_human() {
+    _reset_board();
+}
 
+function play_again_computer() {
+    _reset_board();
+    _comp_choice();
+}
